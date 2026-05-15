@@ -29,6 +29,3 @@ jobs:
 
       - name: Build
         run: npm run build
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          APP_URL: ${{ secrets.APP_URL }}

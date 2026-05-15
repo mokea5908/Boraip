@@ -26,9 +26,6 @@ jobs:
 
       - name: Build
         run: npm run build
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          APP_URL: ${{ secrets.APP_URL }}
 
       - name: Deploy to server via SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -40,10 +37,7 @@ jobs:
           script: |
             cd /home/${{ secrets.SERVER_USER }}/boraip
             git pull origin main
-            docker build \
-              --build-arg GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" \
-              --build-arg APP_URL="${{ secrets.APP_URL }}" \
-              -t bora-ip:latest .
+            docker build -t bora-ip:latest .
             docker stop bora-ip || true
             docker rm bora-ip || true
             docker run -d \
