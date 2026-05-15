@@ -49,5 +49,5 @@ jobs:
             docker run -d \
               --name bora-ip \
               --restart always \
-              -p 80:80 \
+              -p 9054:80 \
               bora-ip:latest
