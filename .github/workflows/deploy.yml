@@ -35,12 +35,12 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.SERVER_PORT }}
           script: |
-            cd /home/${{ secrets.SERVER_USER }}/boraip
+            cd ~/boraip
             git pull origin main
-            docker build -t bora-ip:latest .
-            docker stop bora-ip || true
-            docker rm bora-ip || true
-            docker run -d \
+            /usr/local/bin/docker build -t bora-ip:latest .
+            /usr/local/bin/docker stop bora-ip || true
+            /usr/local/bin/docker rm bora-ip || true
+            /usr/local/bin/docker run -d \
               --name bora-ip \
               --restart always \
               -p 9054:80 \
