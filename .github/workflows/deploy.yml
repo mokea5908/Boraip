@@ -1,0 +1,53 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install & Lint
+        run: |
+          npm ci
+          npm run lint
+
+      - name: Build
+        run: npm run build
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          APP_URL: ${{ secrets.APP_URL }}
+
+      - name: Deploy to server via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: ${{ secrets.SERVER_PORT }}
+          script: |
+            cd /home/${{ secrets.SERVER_USER }}/boraip
+            git pull origin main
+            docker build \
+              --build-arg GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" \
+              --build-arg APP_URL="${{ secrets.APP_URL }}" \
+              -t bora-ip:latest .
+            docker stop bora-ip || true
+            docker rm bora-ip || true
+            docker run -d \
+              --name bora-ip \
+              --restart always \
+              -p 80:80 \
+              bora-ip:latest

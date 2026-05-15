@@ -1,0 +1,17 @@
+# BorA IP - robots.txt
+# 모든 주요 검색엔진 크롤러 허용
+
+User-agent: *
+Allow: /
+Disallow: /dist/
+
+# 네이버 크롤러 (Yeti)
+User-agent: Yeti
+Allow: /
+
+# 구글 크롤러
+User-agent: Googlebot
+Allow: /
+
+# Sitemap 위치
+Sitemap: https://boraip.com/sitemap.xml

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "mcp__Claude_Preview__preview_start",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "Read(//private/tmp/**)",
+      "Read(//Users/kwisu/**)",
+      "Read(//private/var/folders/**)",
+      "Bash(xargs ls *)",
+      "Bash(chmod:*)",
+      "WebFetch(domain:searchadvisor.naver.com)",
+      "Bash(rtk ls:*)",
+      "Bash(git init:*)",
+      "Bash(git checkout:*)",
+      "Bash(rtk git:*)"
+    ]
+  }
+}
